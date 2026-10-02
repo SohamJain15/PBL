@@ -21,5 +21,10 @@
    (see `pattern-mining.md`).
 9. **Reference comparison**: each window is matched to the SkillCorner *phase of play* at its
    midpoint to measure agreement (NMI / ARI). Phases are never used as input.
+10. **Goal analysis**: dynamic-event score-state transitions are converted into goal records.
+   For each goal, the system evaluates a 15-second pre-goal window against the selected team's
+   match baseline. It ranks possible weakness signals for the conceding team and attacking
+   signals for the scoring team using metric z-scores, then attaches the phase and any pattern
+   episode active at the goal timestamp.
 
 Everything is recomputed from the raw files; nothing in the UI is hardcoded.

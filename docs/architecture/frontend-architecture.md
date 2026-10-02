@@ -14,6 +14,10 @@ src/
 └── utils/              coordinates, interpolation, formatting, pattern styles, constants
 ```
 
+The Analysis page contains the goal impact review. It loads the match goal list, lets the analyst
+select a goal, and displays the score context, 15-second evidence window, conceding-team
+weakness factors, scoring-team attacking signals, phase, and discovered pattern context.
+
 ## Rendering and performance
 
 - The pitch (`FootballPitch`) is static SVG in metre coordinates and is memoised; only
@@ -30,4 +34,4 @@ src/
 ## Separation rule
 
 The frontend performs no analytics. Team shape, hulls, centroids, player kinematics, heatmaps
-and clusters all come from the API; the UI only looks values up by timestamp.
+clusters, and goal factors all come from the API; the UI only formats and displays them.

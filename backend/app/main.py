@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
 
-from app.api.routes import analysis, features, heatmaps, matches, patterns, tracking
+from app.api.routes import analysis, features, goals, heatmaps, matches, patterns, tracking
 from app.core.config import get_settings
 from app.core.exceptions import TacticalLabError
 from app.core.logging import configure_logging, get_logger
@@ -30,5 +30,5 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-for module in (matches, tracking, features, patterns, analysis, heatmaps):
+for module in (matches, tracking, features, patterns, analysis, heatmaps, goals):
     app.include_router(module.router, prefix="/api")

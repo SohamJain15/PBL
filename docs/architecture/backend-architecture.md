@@ -23,9 +23,13 @@ app/
 │   ├── clustering/          BasePatternMiner, KMeansPatternMiner
 │   ├── discovery/           PatternDiscovery pipeline
 │   └── interpretation/      FootballPatternInterpreter (documented rules)
-├── services/                match, tracking, feature, pattern, heatmap
+└── services/                match, tracking, feature, pattern, heatmap, goal analysis
 └── utils/                   coordinates, time, validation
 ```
+
+Goal analysis is evidence-based rather than causal: the provider dynamic-event file does not
+contain a dedicated goal-cause label. The service compares pre-goal tracking metrics with the
+team's match baseline and labels the result as possible weaknesses or attacking signals.
 
 ## Endpoints
 
@@ -42,6 +46,8 @@ app/
 | GET | `/api/matches/{id}/patterns?window&step&k` | discovery summary |
 | GET | `/api/matches/{id}/patterns/{cluster_id}` | cluster + its sequences |
 | GET | `/api/matches/{id}/episodes/{episode_id}` | sequence detail + measured start→end changes |
+| GET | `/api/matches/{id}/goals` | inferred goal events from dynamic-event score changes |
+| GET | `/api/matches/{id}/goals/{goal_id}/analysis` | 15-second pre-goal weaknesses, attacking signals, phase, and pattern context |
 | POST | `/api/analyze` | run discovery with custom window / step / k |
 
 Interactive docs: `http://127.0.0.1:8000/docs`.

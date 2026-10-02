@@ -37,6 +37,18 @@ Tracking `player_id` = `players[].id` (not `trackable_object`).
 (`build_up, create, finish, direct, quick_break, transition, chaotic, set_play`),
 `team_out_of_possession_phase_type` (`high_block, medium_block, low_block, defending_*, chaotic`), …
 
+## `{id}_dynamic_events.csv` (used for goal context)
+
+The event file contains provider event rows such as possession, passing-option, off-ball-run, and
+on-ball-engagement records. Relevant fields include `index`, `frame_start`, `time_start`,
+`period`, `event_type`, `event_subtype`, `team_id`, `team_shortname`, `team_score`, and
+`opponent_team_score`.
+
+The provider does not expose a dedicated `goal` event label in the files used by this project.
+The backend therefore infers goals from score-state transitions ordered by frame. These records
+provide the goal time and score context, but not a validated causal explanation for why the goal
+was scored or conceded.
+
 ## Internal representation (`TrackingData`)
 
 `frame (N) · period (N) · t (N, s) · ball (N,3) · ball_flag (N) · possession (N) ·

@@ -1,6 +1,7 @@
 import { InfoTip } from "@/components/common/InfoTip";
 import { Centered, ErrorNote, Loading } from "@/components/common/Status";
 import { PatternFrequency } from "@/features/analysis/PatternFrequency";
+import { GoalAnalysisPanel } from "@/features/analysis/GoalAnalysisPanel";
 import { TeamShapeChart } from "@/features/analysis/TeamShapeChart";
 import { HeatmapView } from "@/features/heatmaps/HeatmapView";
 import { useMatch } from "@/hooks/useMatch";
@@ -43,6 +44,7 @@ export function AnalysisPage() {
           <div className="h-[300px] p-2">{patterns.data ? <PatternFrequency d={patterns.data} match={m} /> : <Centered><Loading label="Analyzing" /></Centered>}</div>
         </Panel>
       </div>
+      <GoalAnalysisPanel match={m} />
     </div>
   );
 }

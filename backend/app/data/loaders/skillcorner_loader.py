@@ -61,6 +61,9 @@ class SkillCornerFootballLoader(BaseTrackingLoader):
     def phases_path(self, match_id: int) -> Path:
         return self.match_dir(match_id) / f"{match_id}_phases_of_play.csv"
 
+    def dynamic_events_path(self, match_id: int) -> Path:
+        return self.match_dir(match_id) / f"{match_id}_dynamic_events.csv"
+
     # ---- index ---------------------------------------------------------------------
     def list_matches(self) -> list[MatchSummary]:
         index_path = self.root / "matches.json"
@@ -220,5 +223,15 @@ class SkillCornerFootballLoader(BaseTrackingLoader):
         cols = [
             "frame_start", "frame_end", "period", "team_in_possession_id",
             "team_in_possession_phase_type", "team_out_of_possession_phase_type",
+        ]
+        return pd.read_csv(path, usecols=cols)
+
+    def load_dynamic_events(self, match_id: int) -> pd.DataFrame | None:
+        path = self.dynamic_events_path(match_id)
+        if not path.exists():
+            return None
+        cols = [
+            "index", "frame_start", "time_start", "period", "event_type", "event_subtype",
+            "player_name", "team_id", "team_shortname", "team_score", "opponent_team_score",
         ]
         return pd.read_csv(path, usecols=cols)

@@ -13,7 +13,7 @@ data/raw  ──►  backend (Python)                                   ──�
 | Data | `backend/app/data` | Parse provider files into a source-agnostic `MatchMeta` + `TrackingData`; cache to `.npz` |
 | Analytics | `backend/app/analytics` | Deterministic geometry and kinematics: width, depth, hull, compactness, proximity, density, windows |
 | ML | `backend/app/ml` | Window representation → scaling → clustering → episodes → interpretation |
-| Services | `backend/app/services` | Orchestration, caching, assembling API payloads |
+| Services | `backend/app/services` | Orchestration, caching, assembling API payloads, and goal impact analysis |
 | API | `backend/app/api` | FastAPI routes, Pydantic schemas, error mapping |
 | Frontend | `frontend/src` | Rendering, playback, interaction. No analytics. |
 
@@ -36,3 +36,8 @@ Football-specific logic is isolated in `FootballTeamShapeExtractor` and
 - Backend: FastAPI + uvicorn, single process, in-memory LRU for parsed matches.
 - Frontend: Vite dev server proxies `/api` to the backend.
 - `docker-compose.yml` runs both.
+
+The Analysis page adds a goal impact review on top of the discovery workflow. It combines inferred
+score transitions from dynamic events with a 15-second comparison of tracking-derived team metrics,
+phase context, and any nearby discovered pattern. The output describes possible contributors; it
+does not establish causation.

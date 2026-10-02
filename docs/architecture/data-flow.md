@@ -2,6 +2,8 @@
 
 ```
 {id}_tracking_extrapolated.jsonl  (10 Hz, ~59k lines, ~90 MB)
+                                                     └─ possible weaknesses and attacking signals
+```
         │  SkillCornerFootballLoader.load_tracking
         ▼
 TrackingData (dense arrays)  ──cache──►  data/processed/{id}_tracking_v2.npz   (~2.5 s reload)
@@ -21,6 +23,13 @@ Window table  (one row per team × window)
 DiscoveryResult  ──cache──►  data/cache/discovery_{id}_{hash}.pkl
         │
         └─► /patterns, /patterns/{cluster}, /episodes/{id}, POST /analyze
+
+{id}_dynamic_events.csv ──► score-transition goal extraction
+                                             │
+                                             └─► /goals, /goals/{id}/analysis
+                                                     │
+                                                     ├─ 15 s pre-goal metric comparison
+                                                     ├─ phase and discovered-pattern context
 ```
 
 ## Browser budget

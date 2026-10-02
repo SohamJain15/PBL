@@ -41,3 +41,12 @@ phases, which is expected: phases describe game context, clusters describe shape
 - Hold-out matches: fit on N−k matches, assign the rest, compare profiles.
 - Analyst annotation of a sample of sequences per cluster (precision of interpretations).
 - Compare against sequence-aware representations (DTW, autoencoders).
+
+## Goal analysis status
+
+Goal impact analysis is an implemented analyst-facing feature, but it is not part of the clustering
+evaluation above. It currently infers goal records from score-state transitions and reports possible
+pre-goal weaknesses and attacking signals relative to match baselines. There is no labelled goal-
+cause dataset in the current project, so precision, recall, and causal validity have not been
+measured. A future evaluation should compare the inferred records and factors with event data,
+video, and independent analyst annotations.

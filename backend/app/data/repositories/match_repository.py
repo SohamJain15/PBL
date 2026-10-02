@@ -72,6 +72,9 @@ class MatchRepository:
     def get_phases(self, match_id: int) -> pd.DataFrame | None:
         return self.loader.load_phases(match_id)
 
+    def get_dynamic_events(self, match_id: int) -> pd.DataFrame | None:
+        return self.loader.load_dynamic_events(match_id)
+
     def _npz_path(self, match_id: int):  # type: ignore[no-untyped-def]
         return self.processed_dir / f"{match_id}_tracking_{TRACKING_CACHE_VERSION}.npz"
 

@@ -18,3 +18,12 @@
 - **One match with tracking is bundled.** Others require `scripts/download_data.py`
   (~90 MB each).
 - **No video.** The replay is a 2-D reconstruction from tracking only.
+- **Goal-event inference.** Goals are inferred from score changes in dynamic events because the
+  provider file has no dedicated goal event or shot-cause label. The reported 15-second factors
+  are possible contributors relative to a match baseline, not causal findings.
+- **Goal-time tracking gaps.** A score transition can occur after a tracking gap or at the first
+  post-goal event. The goal analysis therefore cannot guarantee that the exact shot, goalkeeper
+  action, or final defensive error is visible.
+- **Goal factors are descriptive.** The current factors use team shape, ball proximity, centroid
+  distance, possession, phase, and pattern context. They do not yet model passing chains, shot
+  location, pressure assignment, defensive line breaks, or video evidence.

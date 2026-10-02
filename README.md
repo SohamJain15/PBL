@@ -3,7 +3,7 @@
 **AI-Powered Spatiotemporal Tactical Pattern Mining for Multisport Analytics** — research prototype, Demo 1 (football).
 
 Real broadcast tracking → team-shape representation → overlapping temporal windows → unsupervised
-pattern discovery → rule-based tactical interpretation → interactive replay.
+pattern discovery → rule-based tactical interpretation → interactive analysis.
 
 > This is an early research prototype. It demonstrates spatiotemporal representation,
 > unsupervised pattern discovery and interpretable visualisation. It does **not** provide
@@ -19,7 +19,13 @@ A workspace with three views:
 |---|---|
 | **Match** | 104 × 68 m pitch rendered from metadata; real 10 fps tracking replay (play / pause / frame step / 0.5–2×); hull, centroid and trajectory overlays; live team shape; tactical replay (before → during → after); tracking-quality breakdown; demo sequence |
 | **Patterns** | Cluster table, PCA embedding (click a point to replay it), feature profiles, interpretation rules, representative sequences, agreement with SkillCorner phases of play |
-| **Analysis** | Team shape over time, occupancy heatmap (team / period / selected window), and pattern frequency |
+| **Analysis** | Team shape over time, occupancy heatmap (team / period / selected window), pattern frequency, and goal impact review |
+
+The Analysis view also includes a goal impact review. It compares the 15 seconds before each
+inferred score change with the conceding team's match baseline, and reports possible defensive
+weaknesses and attacking signals.
+
+Goal analysis details: [`docs/research/goal-analysis.md`](docs/research/goal-analysis.md).
 
 ## 2. Research problem
 
@@ -73,6 +79,9 @@ raw JSONL (10 Hz) → loader → dense arrays + detection flags (.npz cache)
   → direction normalisation (team attacks +x) → frame-level team shape (5 Hz / 10 Hz)
   → overlapping windows (5 s / 1 s, configurable) → 13-d window vectors
   → z-score → K-Means (k by silhouette) → episodes → interpretation → API → UI
+
+Dynamic events are processed separately: score-state transitions produce goal records, which are
+joined with the tracking-derived metrics, phase labels, and discovered pattern context.
 ```
 
 Playback requests only 30 s chunks (≈60 KB gzipped); the browser never holds a full match.
@@ -131,7 +140,8 @@ Two terminals from the repository root:
 
 ```bash
 # terminal 1 — API on http://127.0.0.1:8000  (docs at /docs)
-cd backend && 6
+cd backend
+uvicorn app.main:app --reload
 
 # terminal 2 — UI on http://localhost:5173
 cd frontend && npm run dev
@@ -155,7 +165,7 @@ Keyboard: `space` play / pause, `←` / `→` frame step, `shift` + arrow = 1 s.
 **Demo (2–3 minutes):** open Match → *Demo sequence*. The app jumps to the automatically
 selected real sequence, plays before → during → after with hull and centroid, the panel shows
 the discovered cluster, the measured start → end changes and the interpretation. Then open
-Patterns (embedding + clusters) and Analysis (shape over time, heatmap).
+Patterns (embedding + clusters) and Analysis (shape over time, heatmap, and goal impact review).
 
 ## 11. Dataset attribution
 
