@@ -17,9 +17,9 @@ A workspace with three views:
 
 | View | What it does |
 |---|---|
-| **Match** | 104 × 68 m pitch rendered from metadata; real 10 fps tracking replay (play / pause / frame step / 0.5–2×); hull, centroid and trajectory overlays; live team shape; drag on the timeline to analyse any time window; pattern timeline with one lane per discovered cluster; tactical replay (before → during → after); tracking-quality breakdown; demo sequence |
+| **Match** | 104 × 68 m pitch rendered from metadata; real 10 fps tracking replay (play / pause / frame step / 0.5–2×); hull, centroid and trajectory overlays; live team shape; tactical replay (before → during → after); tracking-quality breakdown; demo sequence |
 | **Patterns** | Cluster table, PCA embedding (click a point to replay it), feature profiles, interpretation rules, representative sequences, agreement with SkillCorner phases of play |
-| **Analysis** | Team shape over time, occupancy heatmap (team / period / selected window), pattern frequency, pattern distribution over the match |
+| **Analysis** | Team shape over time, occupancy heatmap (team / period / selected window), and pattern frequency |
 
 ## 2. Research problem
 
@@ -131,7 +131,7 @@ Two terminals from the repository root:
 
 ```bash
 # terminal 1 — API on http://127.0.0.1:8000  (docs at /docs)
-cd backend && uvicorn app.main:app --reload --port 8000
+cd backend && 6
 
 # terminal 2 — UI on http://localhost:5173
 cd frontend && npm run dev

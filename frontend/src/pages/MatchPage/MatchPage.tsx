@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useAppState } from "@/app/providers/AppStateProvider";
 import { usePlaybackSelector, usePlaybackStore } from "@/app/providers/PlaybackProvider";
-import { PatternTimeline } from "@/components/timeline/PatternTimeline";
 import { FootballPitch } from "@/components/pitch/FootballPitch";
 import { PitchSvg } from "@/components/pitch/PitchOverlay";
 import { Centered, ErrorNote, Loading } from "@/components/common/Status";
@@ -34,7 +33,7 @@ function Legend() {
 
 function Workspace({ match }: { match: MatchDetail }) {
   const store = usePlaybackStore();
-  const { period, setPeriod, episodeId, selectEpisode, demo, window, setWindow, setOverlays } = useAppState();
+  const { period, setPeriod, selectEpisode, demo, setOverlays } = useAppState();
   const players = usePlayerIndex(match);
   const patterns = usePatterns(match.tracking_available);
   const episode = useEpisode();
@@ -72,8 +71,6 @@ function Workspace({ match }: { match: MatchDetail }) {
     store.play();
   }, [detail, period, match, store, setPeriod, setOverlays]);
 
-  const periodInfo = match.periods.find((p) => p.period === period);
-  const periodEpisodes = (patterns.data?.episodes ?? []).filter((e) => e.period === period);
   const focusSide = detail ? detail.episode.side : null;
 
   return (
@@ -132,31 +129,6 @@ function Workspace({ match }: { match: MatchDetail }) {
       </div>
       <div className="shrink-0 border-t border-ink-700 bg-ink-900">
         <TransportBar match={match} frames={current?.frames ?? null} />
-        {periodInfo && (
-          <div className="relative">
-            <PatternTimeline
-              start={periodInfo.start_s}
-              end={periodInfo.end_s}
-              episodes={periodEpisodes}
-              clusters={patterns.data?.clusters ?? []}
-              sideFilter="both"
-              selectedEpisodeId={episodeId}
-              window={window && window.period === period ? window : null}
-              onSeek={(t) => {
-                if (episodeId !== null) selectEpisode(null);
-                store.setLoop(null);
-                store.seek(t);
-              }}
-              onSelectEpisode={(id) => selectEpisode(id)}
-              onSelectWindow={(w) => setWindow(w ? { period, ...w } : null)}
-            />
-            {patterns.loading && (
-              <div className="absolute inset-x-0 bottom-2 flex justify-center">
-                <Loading label="Analyzing" />
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

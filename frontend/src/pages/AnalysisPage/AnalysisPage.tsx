@@ -1,6 +1,5 @@
 import { InfoTip } from "@/components/common/InfoTip";
 import { Centered, ErrorNote, Loading } from "@/components/common/Status";
-import { PatternDistribution } from "@/features/analysis/PatternDistribution";
 import { PatternFrequency } from "@/features/analysis/PatternFrequency";
 import { TeamShapeChart } from "@/features/analysis/TeamShapeChart";
 import { HeatmapView } from "@/features/heatmaps/HeatmapView";
@@ -39,12 +38,9 @@ export function AnalysisPage() {
           <HeatmapView match={m} />
         </Panel>
       </div>
-      <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
-        <Panel title="Pattern frequency" info="Discovered sequences (merged consecutive windows) per cluster and team." className="border-r" right={patterns.data && <span className="font-mono text-[10px] text-ink-500">{patterns.data.episodes.length} sequences</span>}>
+      <div>
+        <Panel title="Pattern frequency" info="Discovered sequences (merged consecutive windows) per cluster and team." right={patterns.data && <span className="font-mono text-[10px] text-ink-500">{patterns.data.episodes.length} sequences</span>}>
           <div className="h-[300px] p-2">{patterns.data ? <PatternFrequency d={patterns.data} match={m} /> : <Centered><Loading label="Analyzing" /></Centered>}</div>
-        </Panel>
-        <Panel title="Pattern distribution" info="Each mark is one discovered sequence; upper half of a row = home team, lower half = away team.">
-          <div className="p-4">{patterns.data ? <PatternDistribution d={patterns.data} match={m} /> : <Centered><Loading label="Analyzing" /></Centered>}</div>
         </Panel>
       </div>
     </div>
